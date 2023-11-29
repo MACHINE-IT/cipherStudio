@@ -1,5 +1,13 @@
+.landingPageOuter {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
 .userDetailsEntrySection {
     margin: 3rem auto;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;

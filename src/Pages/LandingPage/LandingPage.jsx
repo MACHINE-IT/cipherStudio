@@ -47,37 +47,39 @@ const LandingPage = () => {
     }
 
     return (
-        <div>
-            <div className="userDetailsEntrySection">
-                <div className='userTextFieldsContainer'>
-                    <TextField
-                        className="textField"
-                        placeholder="First Name"
-                        value={firstName}
-                        onChange={onFirstNameChangeHandler}
-                    />
-                    <TextField
-                        className="textField"
-                        placeholder="Last Name"
-                        value={lastName}
-                        onChange={onLastNameChangeHandler}
-                    />
-                    <TextField
-                        className="textField"
-                        placeholder="Email"
-                        value={email}
-                        onChange={onEmailChangeHandler}
-                    />
-                    <TextField
-                        className="textField"
-                        placeholder="UserName"
-                        value={userName}
-                        onChange={onUserNameChangeHandler}
-                    />
+        <div className='landingPageOuter'>
+            <div className='positionAbsoluteForEntrySection'>
+                <div className="userDetailsEntrySection">
+                    <div className='userTextFieldsContainer'>
+                        <TextField
+                            className="textField"
+                            placeholder="First Name"
+                            value={firstName}
+                            onChange={onFirstNameChangeHandler}
+                        />
+                        <TextField
+                            className="textField"
+                            placeholder="Last Name"
+                            value={lastName}
+                            onChange={onLastNameChangeHandler}
+                        />
+                        <TextField
+                            className="textField"
+                            placeholder="Email"
+                            value={email}
+                            onChange={onEmailChangeHandler}
+                        />
+                        <TextField
+                            className="textField"
+                            placeholder="UserName"
+                            value={userName}
+                            onChange={onUserNameChangeHandler}
+                        />
+                    </div>
+                    <PrimaryButton className="userSaveButton" text="Save" onClick={onSaveButtonClickHandler} allowDisabledFocus />
                 </div>
-                <PrimaryButton className="userSaveButton" text="Save" onClick={onSaveButtonClickHandler} allowDisabledFocus />
             </div>
-            <UserDetailsListDisplay usersList={usersList} />
+            <UserDetailsListDisplay usersList={usersList} setUsersList={setUsersList} />
         </div>
     );
 }

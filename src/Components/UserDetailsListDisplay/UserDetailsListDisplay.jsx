@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import { useState, useEfect } from 'react';
 import './UserDetailsListDisplay.css';
-import { DetailsList, DetailsListLayoutMode, Selection } from '@fluentui/react/lib/DetailsList';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode } from '@fluentui/react/lib/DetailsList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
 import { Icon } from '@fluentui/react/lib/Icon';
 
-const UserDetailsListDisplay = ({ usersList }) => {
+const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
     const [selection] = useState(new Selection());
 
     const columns = [
+        { key: 'navbutton', name: '', fieldName: 'navbutton', minWidth: 100, maxWidth: 200, isResizable: true },
         { key: 'firstname', name: 'First Name', fieldName: 'firstname', minWidth: 100, maxWidth: 200, isResizable: true },
         { key: 'lastname', name: 'Last Name', fieldName: 'lastname', minWidth: 100, maxWidth: 200, isResizable: true },
         { key: 'email', name: 'Email', fieldName: 'email', minWidth: 100, maxWidth: 200, isResizable: true },
@@ -28,11 +29,17 @@ const UserDetailsListDisplay = ({ usersList }) => {
         const key = column.key;
 
         switch (key) {
+            case 'navbutton':
+                return (
+                    <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                        <Icon iconName="GlobalNavButton" style={{ cursor: 'pointer' }} onClick={() => handleEditClick(item)} />
+                    </div>
+                );
             case 'actions':
                 return (
                     <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Icon iconName="Edit" style={{ cursor: 'pointer' }} onClick={() => handleEditClick(item)} />
-                        <Icon iconName="Delete" style={{ cursor: 'pointer' }} onClick={() => handleDeleteClick(item)} />
+                        <Icon iconName="Edit" className='editButton' style={{ cursor: 'pointer', color: 'blue' }} onClick={() => handleEditClick(item)} />
+                        <Icon iconName="Delete" className='deleteButton' style={{ cursor: 'pointer', color: 'red' }} onClick={() => handleDeleteClick(item)} />
                     </div>
                 );
             default:
@@ -47,18 +54,26 @@ const UserDetailsListDisplay = ({ usersList }) => {
 
     const handleDeleteClick = (item) => {
         // Handle delete click
-        alert(`Delete clicked for: ${item.firstname}`);
+        const updatedUsersList = usersList.filter((user) => user !== item);
+
+        // Update state to re-render the component
+        setUsersList(updatedUsersList);
+
+        // Update local storage with the updated array
+        localStorage.setItem('formData', JSON.stringify(updatedUsersList));
     };
+
 
     return (
         <div className='users-list-display-outer-container'>
             <MarqueeSelection selection={selection}>
                 <DetailsList
-                    compact={true}
+                    // compact={true}
                     items={usersList}
                     columns={columns}
                     setKey="set"
                     layoutMode={DetailsListLayoutMode.justified}
+                    selectionMode={SelectionMode.none}
                     selection={selection}
                     selectionPreservedOnEmptyClick={true}
                     onItemInvoked={onItemInvoked}

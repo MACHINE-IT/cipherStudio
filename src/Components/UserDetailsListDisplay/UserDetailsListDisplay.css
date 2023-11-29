@@ -11,6 +11,10 @@
     gap: 2rem;
 }
 
+.ms-DetailsRow-cell .ms-DetailsRow-cellCheck {
+    display: none;
+}
+
 .iconDivContainer {
     display: 'flex';
     justify-content: 'space-around';
