@@ -10,3 +10,9 @@
     justify-content: center;
     gap: 2rem;
 }
+
+.iconDivContainer {
+    display: 'flex';
+    justify-content: 'space-around';
+    align-items: 'center';
+}
