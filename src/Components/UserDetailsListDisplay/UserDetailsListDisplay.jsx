@@ -1,12 +1,15 @@
-import { useState, useEfect } from 'react';
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
 import './UserDetailsListDisplay.css';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode } from '@fluentui/react/lib/DetailsList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
 import { Icon } from '@fluentui/react/lib/Icon';
+import UserEditDialog from '../EditUserDialog/UserEditDialog';
 
 const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
     const [selection] = useState(new Selection());
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
     const columns = [
         { key: 'navbutton', name: '', fieldName: 'navbutton', minWidth: 100, maxWidth: 200, isResizable: true },
@@ -20,11 +23,6 @@ const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
 
     initializeIcons();
 
-    const onItemInvoked = (item) => {
-        // Handle item invoked
-        alert(`Item invoked: ${item.firstname}`);
-    };
-
     const onRenderItemColumn = (item, index, column) => {
         const key = column.key;
 
@@ -32,13 +30,13 @@ const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
             case 'navbutton':
                 return (
                     <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Icon iconName="GlobalNavButton" style={{ cursor: 'pointer' }} onClick={() => handleEditClick(item)} />
+                        <Icon iconName="GlobalNavButton" style={{ cursor: 'pointer' }} />
                     </div>
                 );
             case 'actions':
                 return (
                     <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Icon iconName="Edit" className='editButton' style={{ cursor: 'pointer', color: 'blue' }} onClick={() => handleEditClick(item)} />
+                        <UserEditDialog initialValues={item} usersList={usersList} setUsersList={setUsersList} setIsEditDialogOpen={() => setIsEditDialogOpen(true)} />
                         <Icon iconName="Delete" className='deleteButton' style={{ cursor: 'pointer', color: 'red' }} onClick={() => handleDeleteClick(item)} />
                     </div>
                 );
@@ -47,10 +45,6 @@ const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
         }
     };
 
-    const handleEditClick = (item) => {
-        // Handle edit click
-        alert(`Edit clicked for: ${item.firstname}`);
-    };
 
     const handleDeleteClick = (item) => {
         // Handle delete click
@@ -76,7 +70,6 @@ const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
                     selectionMode={SelectionMode.none}
                     selection={selection}
                     selectionPreservedOnEmptyClick={true}
-                    onItemInvoked={onItemInvoked}
                     onRenderItemColumn={onRenderItemColumn}
                     ariaLabelForSelectionColumn="Toggle selection"
                     ariaLabelForSelectAllCheckbox="Toggle selection for all items"
