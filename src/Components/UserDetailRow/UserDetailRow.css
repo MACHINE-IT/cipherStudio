@@ -1,0 +1,12 @@
+.userDetail .ms-DetailsList-headerWrapper {
+    display: none;
+}
+
+.userDetail .ms-DetailsRow-cellCheck {
+    display: none;
+}
+
+.userDetail {
+    min-width: 100;
+    max-width: 200;
+}
