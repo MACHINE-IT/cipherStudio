@@ -22,7 +22,7 @@
     height: 2rem;
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 412px) {
 
     .userDetailsEntrySection {
         left: 3rem;

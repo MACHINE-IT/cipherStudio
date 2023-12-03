@@ -21,3 +21,9 @@
     justify-content: 'space-around';
     align-items: 'center';
 }
+
+@media only screen and (max-width: 412px) {
+    .users-list-display-outer-container {
+        right: 3rem;
+    }
+}
