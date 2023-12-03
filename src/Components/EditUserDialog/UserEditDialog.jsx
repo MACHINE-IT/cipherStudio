@@ -11,12 +11,13 @@ import {
     Button,
 } from "@fluentui/react-components";
 import { Icon, TextField } from "@fluentui/react";
+import './EditUserDialog.css';
 
 const DialogTest = ({ initialValues, usersList, setUsersList, setIsEditDialogOpen }) => {
     const [editedFirstName, setEditedFirstName] = useState(initialValues.firstname);
     const [editedLastName, setEditedLastName] = useState(initialValues.lastname);
     const [editedEmail, setEditedEmail] = useState(initialValues.email);
-    const [editedUserName, setEditedUserName] = useState(initialValues.username);
+    const [editedUserName,] = useState(initialValues.username);
 
     const onSaveClick = () => {
         const editedData = {
@@ -42,41 +43,43 @@ const DialogTest = ({ initialValues, usersList, setUsersList, setIsEditDialogOpe
     };
 
     return (
-        <Dialog>
-            <DialogTrigger disableButtonEnhancement>
-                <Icon iconName="Edit" className='editButton' style={{ cursor: 'pointer', color: 'blue' }} />
-            </DialogTrigger>
-            <DialogSurface>
-                <DialogBody>
-                    <DialogTitle>Edit Details for {initialValues?.firstname}</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            label="First Name"
-                            value={editedFirstName}
-                            onChange={(e, newValue) => setEditedFirstName(newValue)}
-                        />
-                        <TextField
-                            label="Last Name"
-                            value={editedLastName}
-                            onChange={(e, newValue) => setEditedLastName(newValue)}
-                        />
-                        <TextField
-                            label="Email"
-                            value={editedEmail}
-                            onChange={(e, newValue) => setEditedEmail(newValue)}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <DialogTrigger disableButtonEnhancement>
-                            <Button appearance="secondary" onClick={onSaveClick}>Update</Button>
-                        </DialogTrigger>
-                        <DialogTrigger disableButtonEnhancement>
-                            <Button appearance="primary" >Cancel</Button>
-                        </DialogTrigger>
-                    </DialogActions>
-                </DialogBody>
-            </DialogSurface>
-        </Dialog>
+        <div>
+            <Dialog>
+                <DialogTrigger disableButtonEnhancement>
+                    <Icon iconName="Edit" className='editButton' style={{ cursor: 'pointer', color: 'blue' }} />
+                </DialogTrigger>
+                <DialogSurface className="userEditDialogBox">
+                    <DialogBody>
+                        <DialogTitle>Edit Details for {initialValues?.firstname}</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                label="First Name"
+                                value={editedFirstName}
+                                onChange={(e, newValue) => setEditedFirstName(newValue)}
+                            />
+                            <TextField
+                                label="Last Name"
+                                value={editedLastName}
+                                onChange={(e, newValue) => setEditedLastName(newValue)}
+                            />
+                            <TextField
+                                label="Email"
+                                value={editedEmail}
+                                onChange={(e, newValue) => setEditedEmail(newValue)}
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <DialogTrigger disableButtonEnhancement>
+                                <Button appearance="secondary" onClick={onSaveClick}>Update</Button>
+                            </DialogTrigger>
+                            <DialogTrigger disableButtonEnhancement>
+                                <Button appearance="primary" >Cancel</Button>
+                            </DialogTrigger>
+                        </DialogActions>
+                    </DialogBody>
+                </DialogSurface>
+            </Dialog>
+        </div>
     );
 };
 
