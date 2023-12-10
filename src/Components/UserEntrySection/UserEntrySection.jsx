@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
+import axios from 'axios';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import './UserEntrySection.css'
@@ -26,7 +27,7 @@ const UserEntrySection = ({ usersList, setUsersList }) => {
         setUserName(e.target.value);
     };
 
-    const onSaveButtonClickHandler = () => {
+    const onSaveButtonClickHandler = async (e) => {
         const formData = {
             firstname: firstName,
             lastname: lastName,
@@ -39,15 +40,29 @@ const UserEntrySection = ({ usersList, setUsersList }) => {
             alert(`${formData.username} already exists!`);
         }
         else {
-            // Update state and localStorage
-            setUsersList((prevUsersList) => [...prevUsersList, formData]);
-            localStorage.setItem('formData', JSON.stringify([...usersList, formData]));
+            try {
+                e.preventDefault();
+                const response = await axios.post('http://localhost:5000/add-new-user', {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    userName: userName
+                });
 
-            // Clear input fields
-            setFirstName('');
-            setLastName('');
-            setEmail('');
-            setUserName('');
+                const savedUser = response.data;
+
+                // Update state and localStorage
+                setUsersList((prevUsersList) => [...prevUsersList, savedUser]);
+                // localStorage.setItem('formData', JSON.stringify([...usersList, savedUser]));
+
+                // Clear input fields
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setUserName('');
+            } catch (err) {
+                console.error('Error submitting user data:', err);
+            }
         }
     };
 
