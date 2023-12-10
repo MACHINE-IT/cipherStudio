@@ -1,6 +1,7 @@
 {
   "name": "cipher-studio",
   "private": true,
+  "proxy": "http://localhost:5000",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -16,6 +17,8 @@
     "@fluentui/font-icons-mdl2": "^8.5.27",
     "@fluentui/react": "^8.112.9",
     "@fluentui/react-components": "^9.42.0",
+    "axios": "^1.6.2",
+    "cors": "^2.8.5",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",

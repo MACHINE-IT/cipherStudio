@@ -16,7 +16,7 @@ const DialogTest = ({ initialValues, usersList, setUsersList, setIsEditDialogOpe
     const [editedFirstName, setEditedFirstName] = useState(initialValues.firstname);
     const [editedLastName, setEditedLastName] = useState(initialValues.lastname);
     const [editedEmail, setEditedEmail] = useState(initialValues.email);
-    const [editedUserName, setEditedUserName] = useState(initialValues.username);
+    const [editedUserName,] = useState(initialValues.username);
 
     const onSaveClick = () => {
         const editedData = {

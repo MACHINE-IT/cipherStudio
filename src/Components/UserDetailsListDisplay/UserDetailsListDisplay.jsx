@@ -5,18 +5,19 @@ import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode } from '@f
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
 import { Icon } from '@fluentui/react/lib/Icon';
-import UserEditDialog from '../EditUserDialog/UserEditDialog';
+import UserEditDialog from '../UserEditDialog/UserEditDialog';
 
 const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
     const [selection] = useState(new Selection());
-    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+    const [, setIsEditDialogOpen] = useState(false);
+
 
     const columns = [
         { key: 'navbutton', name: '', fieldName: 'navbutton', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'firstname', name: 'First Name', fieldName: 'firstname', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'lastname', name: 'Last Name', fieldName: 'lastname', minWidth: 100, maxWidth: 200, isResizable: true },
+        { key: 'firstName', name: 'First Name', fieldName: 'firstname', minWidth: 100, maxWidth: 200, isResizable: true },
+        { key: 'lastName', name: 'Last Name', fieldName: 'lastname', minWidth: 100, maxWidth: 200, isResizable: true },
         { key: 'email', name: 'Email', fieldName: 'email', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'username', name: 'User Name', fieldName: 'username', minWidth: 100, maxWidth: 200, isResizable: true },
+        { key: 'userName', name: 'User Name', fieldName: 'username', minWidth: 100, maxWidth: 200, isResizable: true },
         { key: 'actions', name: 'Actions', fieldName: 'actions', minWidth: 100, maxWidth: 200, isResizable: true },
     ];
 
@@ -57,7 +58,7 @@ const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
         localStorage.setItem('formData', JSON.stringify(updatedUsersList));
     };
 
-
+    console.log(usersList);
     return (
         <div className='users-list-display-outer-container'>
             <MarqueeSelection selection={selection}>
@@ -70,10 +71,12 @@ const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
                     selectionMode={SelectionMode.none}
                     selection={selection}
                     selectionPreservedOnEmptyClick={true}
-                    onRenderItemColumn={onRenderItemColumn}
+                    // onRenderItemColumn={onRenderItemColumn}
+                    onRenderItemColumn={(item, index, column) => onRenderItemColumn(item, index, column)}
                     ariaLabelForSelectionColumn="Toggle selection"
                     ariaLabelForSelectAllCheckbox="Toggle selection for all items"
                     checkButtonAriaLabel="select row"
+                    draggable
                 />
             </MarqueeSelection>
         </div>
