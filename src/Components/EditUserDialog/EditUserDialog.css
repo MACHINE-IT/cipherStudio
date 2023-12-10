@@ -1,0 +1,7 @@
+@media only screen and (max-width: 412px) {
+
+    .userEditDialogBox {
+        max-width: 20rem !important;
+        left: 20rem !important;
+    }
+}

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
+import './UserEntrySection.css'
 
 const UserEntrySection = ({ usersList, setUsersList }) => {
     const [firstName, setFirstName] = useState('');
