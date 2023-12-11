@@ -14,10 +14,10 @@ const UserDetailsListDisplay = ({ user, usersList, setUsersList }) => {
 
     const columns = [
         { key: 'navbutton', name: '', fieldName: 'navbutton', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'firstname', name: 'Firsi Name', fieldName: 'firstname', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'lastname', name: 'Last Name', fieldName: 'lastname', minWidth: 100, maxWidth: 200, isResizable: true },
+        { key: 'firstName', name: 'Firsi Name', fieldName: 'firstname', minWidth: 100, maxWidth: 200, isResizable: true },
+        { key: 'lastName', name: 'Last Name', fieldName: 'lastname', minWidth: 100, maxWidth: 200, isResizable: true },
         { key: 'email', name: 'Email', fieldName: 'email', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'username', name: 'User Name', fieldName: 'username', minWidth: 100, maxWidth: 200, isResizable: true },
+        { key: 'userName', name: 'User Name', fieldName: 'username', minWidth: 100, maxWidth: 200, isResizable: true },
         { key: 'actions', name: 'Actions', fieldName: 'actions', minWidth: 100, maxWidth: 200, isResizable: true },
     ];
 
