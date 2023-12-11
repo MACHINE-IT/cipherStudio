@@ -1,0 +1,31 @@
+.userDetailsEntrySection {
+    margin: 3rem auto;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    column-gap: 2rem;
+}
+
+.userTextFieldsContainer {
+    display: grid;
+    gap: 1rem;
+}
+
+.userSaveButton {
+    margin: 1rem;
+}
+
+.textField {
+    width: fit-content !important;
+    height: 2rem;
+}
+
+@media only screen and (max-width: 412px) {
+
+    .userDetailsEntrySection {
+        left: 3rem;
+        align-items: flex-start;
+    }
+}

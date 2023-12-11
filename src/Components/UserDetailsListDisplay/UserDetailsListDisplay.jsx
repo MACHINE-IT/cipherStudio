@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import './UserDetailsListDisplay.css';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode } from '@fluentui/react/lib/DetailsList';
-import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
 import { Icon } from '@fluentui/react/lib/Icon';
-import UserEditDialog from '../UserEditDialog/UserEditDialog';
+import UserEditDialog from '../EditUserDialog/UserEditDialog';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import UserDetailRow from '../UserDetailRow/UserDetailRow';
 
 const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
     const [selection] = useState(new Selection());
     const [, setIsEditDialogOpen] = useState(false);
-
 
     const columns = [
         { key: 'navbutton', name: '', fieldName: 'navbutton', minWidth: 100, maxWidth: 200, isResizable: true },
@@ -20,7 +21,6 @@ const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
         { key: 'userName', name: 'User Name', fieldName: 'username', minWidth: 100, maxWidth: 200, isResizable: true },
         { key: 'actions', name: 'Actions', fieldName: 'actions', minWidth: 100, maxWidth: 200, isResizable: true },
     ];
-
 
     initializeIcons();
 
@@ -46,25 +46,32 @@ const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
         }
     };
 
-
     const handleDeleteClick = (item) => {
-        // Handle delete click
         const updatedUsersList = usersList.filter((user) => user !== item);
-
-        // Update state to re-render the component
         setUsersList(updatedUsersList);
-
-        // Update local storage with the updated array
         localStorage.setItem('formData', JSON.stringify(updatedUsersList));
     };
 
-    console.log(usersList);
+    const onDragEnd = (result) => {
+        const { destination, source } = result;
+
+        if (!destination) {
+            return;
+        }
+
+        const reorderedUsersList = Array.from(usersList);
+        const [removed] = reorderedUsersList.splice(source.index, 1);
+        reorderedUsersList.splice(destination.index, 0, removed);
+
+        setUsersList(reorderedUsersList);
+        localStorage.setItem('formData', JSON.stringify(reorderedUsersList));
+    };
+
     return (
         <div className='users-list-display-outer-container'>
-            <MarqueeSelection selection={selection}>
+            <DragDropContext onDragEnd={onDragEnd}>
                 <DetailsList
-                    // compact={true}
-                    items={usersList}
+                    items={[]}
                     columns={columns}
                     setKey="set"
                     layoutMode={DetailsListLayoutMode.justified}
@@ -78,7 +85,35 @@ const UserDetailsListDisplay = ({ usersList, setUsersList }) => {
                     checkButtonAriaLabel="select row"
                     draggable
                 />
-            </MarqueeSelection>
+                <Droppable droppableId={uuidv4()}>
+                    {(provided, snapshot) => (
+                        <div
+                            ref={provided.innerRef}
+                            style={{ backgroundColor: snapshot.isDraggingOver ? 'darkgery' : 'grey' }}
+                            {...provided.droppableProps}
+                        >
+                            {usersList.map((user, index) => (
+                                <Draggable key={user.username} draggableId={user.username} index={index}>
+                                    {(provided, snapshot) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            style={{
+                                                ...provided.draggableProps.style,
+                                                boxShadow: snapshot.isDragging ? "0 0 .4rem #666" : "none",
+                                            }}
+                                        >
+                                            <UserDetailRow key={index} user={user} index={index} usersList={usersList} setUsersList={setUsersList} columns={columns} />
+                                        </div>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
         </div>
     );
 };
