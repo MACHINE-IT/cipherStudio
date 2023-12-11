@@ -41,7 +41,7 @@ const UserEntrySection = ({ usersList, setUsersList }) => {
         else {
             try {
                 e.preventDefault();
-                const response = await axios.post('http://localhost:5000/add-new-user', {
+                const response = await axios.post('https://cipher-backend-1qvm.onrender.com/add-new-user', {
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
